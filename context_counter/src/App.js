@@ -1,13 +1,10 @@
 import React from 'react';
-import { CounterProvider } from './context/counterContext';
 import Counter from './component/Counter';
 
 function App() {
   return (
     <div>
-      <CounterProvider>
-        <Counter />
-      </CounterProvider>
+      <Counter />
     </div>
   );
 }
