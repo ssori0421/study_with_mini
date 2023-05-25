@@ -1,6 +1,10 @@
-
 function App() {
-  return <div>todo</div>;
+	return (
+		<div>
+			todo
+			<input />
+		</div>
+	);
 }
 
 export default App;
