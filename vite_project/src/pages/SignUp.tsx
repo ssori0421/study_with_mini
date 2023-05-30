@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { email_regex, password_regex } from '../util/regex';
 import { useNavigate } from 'react-router-dom';
+import { postSignUp } from '../service/sign';
 
 const SignUp = () => {
 	const [email, setEmail] = useState<string>('');
@@ -30,14 +31,22 @@ const SignUp = () => {
 		}
 	};
 
-	const isFormValid = isValidEmail && isValidPassword;
-
-	const onsubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+	const onsubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (isFormValid) {
+		try {
+			const body = {
+				email: email,
+				password: password,
+			};
+			await postSignUp(body);
 			Navigate('/signin');
-		} else {
-			console.error('아이디와 비밀번호를 올바르게 입력 해주세요.');
+		} catch (error: any) {
+			const errorCode = error.response.status;
+			if (errorCode < 500 && errorCode >= 400) {
+				const { message } = error.response.data;
+				alert(message);
+			}
+			console.error('회원가입 실패');
 		}
 	};
 
