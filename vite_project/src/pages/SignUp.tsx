@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { email_regex, password_regex } from '../util/regex';
 import { useNavigate } from 'react-router-dom';
 import { postSignUp } from '../service/sign';
+import styled from 'styled-components';
 
 const SignUp = () => {
 	const [email, setEmail] = useState<string>('');
@@ -16,9 +17,6 @@ const SignUp = () => {
 		setEmail(value);
 		const isValidEmail = email_regex.test(value);
 		setIsValidEmail(isValidEmail);
-		if (!isValidEmail) {
-			console.error('@를 포함해서 이메일을 작성해주세요');
-		}
 	};
 
 	const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,9 +24,6 @@ const SignUp = () => {
 		setPassword(value);
 		const isValidPassword = password_regex.test(value);
 		setIsValidPassword(isValidPassword);
-		if (!isValidPassword) {
-			console.error('8자 이상 작성 해주세요.');
-		}
 	};
 
 	const onsubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -51,13 +46,80 @@ const SignUp = () => {
 	};
 
 	return (
-		<form onSubmit={onsubmitForm}>
-			<div>signup</div>
-			<input data-testid="email-input" onChange={onChangeEmail} />
-			<input data-testid="password-input" onChange={onChangePassword} />
-			<button data-testid="signup-button">회원가입</button>
-		</form>
+		<StSignContainer>
+			<StTitle>회원가입 :)</StTitle>
+			<StForm onSubmit={onsubmitForm}>
+				<StInputName>Email:</StInputName>
+				<StSignInput data-testid="email-input" onChange={onChangeEmail} placeholder="이메일을 입력해 주세요." />
+				<StSignMessage>@를 포함해서 이메일을 작성해 주세요.</StSignMessage>
+				<StInputName>Password:</StInputName>
+				<StSignInput
+					type="password"
+					data-testid="password-input"
+					onChange={onChangePassword}
+					placeholder="비밀번호를 입력해 주세요."
+				/>
+				<StSignMessage>비밀번호를 8자 이상 작성해 주세요.</StSignMessage>
+				<StButtonWrapper>
+					<StButton data-testid="signup-button">회원가입</StButton>
+				</StButtonWrapper>
+			</StForm>
+		</StSignContainer>
 	);
 };
 
 export default SignUp;
+
+const StSignContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 150px;
+	gap: 10px;
+`;
+
+const StTitle = styled.div`
+	font-size: 20px;
+	font-weight: 700;
+	color: #adc9ff;
+`;
+
+const StForm = styled.form`
+	width: 380px;
+	border: 1px solid #adc9ff;
+	border-radius: 10px;
+	padding: 10px;
+`;
+
+const StInputName = styled.p`
+	font-size: 12px;
+	font-weight: 500;
+	color: #adc9ff;
+`;
+
+const StSignInput = styled.input`
+	display: block;
+	width: 100%;
+	border: 1px solid #adc9ff;
+
+	padding: 4px 2px;
+`;
+
+const StSignMessage = styled.p`
+	color: #adc9ff;
+	font-size: 3px;
+	font-weight: 400;
+	margin-bottom: 10px;
+`;
+
+const StButtonWrapper = styled.div`
+	text-align: center;
+`;
+
+const StButton = styled.button`
+	width: 200px;
+	height: 30px;
+	background-color: #adc9ff;
+	color: #fff;
+	border-radius: 4px;
+`;
