@@ -7,7 +7,6 @@ const postSignUp = async (body: object) => {
 
 const postSignIn = async (body: object) => {
 	const { data } = await instance.post('/auth/signin', body);
-	console.log('data', data);
 	setAccessToken(data.access_token);
 };
 
