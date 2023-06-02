@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { createTodo, getTodo } from '../service/todo';
+import { ITodo } from '../types/todo';
 
 const ToDo = () => {
-	const [todo, setTodo] = useState('');
-	const [todoList, setTodoList] = useState('');
+	const [todo, setTodo] = useState<string>('');
+	const [todoList, setTodoList] = useState<ITodo[]>();
 
 	const onChangeTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
@@ -24,7 +25,7 @@ const ToDo = () => {
 			<button data-testid="new-todo-add-button" onClick={onCreateTodo}>
 				추가
 			</button>
-
+			{todoList && todoList.map((item: any) => console.log(item))}
 			<li>
 				<label>
 					<input type="checkbox" />
