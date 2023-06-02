@@ -5,4 +5,9 @@ const createTodo = async (body: object) => {
 	return data;
 };
 
-export { createTodo };
+const getTodo = async () => {
+	const { data } = await authInstance.get('/todos');
+	return data;
+};
+
+export { createTodo, getTodo };
