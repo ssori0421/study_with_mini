@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { createTodo } from '../service/todo';
+import { createTodo, getTodo } from '../service/todo';
 
 const ToDo = () => {
 	const [todo, setTodo] = useState('');
+	const [todoList, setTodoList] = useState('');
 
 	const onChangeTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
@@ -12,6 +13,9 @@ const ToDo = () => {
 	const onCreateTodo = async () => {
 		const body = { todo: todo };
 		await createTodo(body);
+		const getTodoList = await getTodo();
+		setTodoList(getTodoList);
+		console.log('todoList', todoList);
 	};
 
 	return (
