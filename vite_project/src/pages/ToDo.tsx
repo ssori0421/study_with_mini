@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { createTodo, getTodo } from '../service/todo';
+import { createTodo, getTodo, deleteTodo } from '../service/todo';
 import { ITodo } from '../types/todo';
 
 const ToDo = () => {
@@ -20,6 +20,17 @@ const ToDo = () => {
 		setTodo(value);
 	};
 
+	const onChangeComplete = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
+		const { checked } = e.target;
+		const currentTodoList = todoList?.map((item: ITodo) => {
+			if (item.id === id) {
+				return { ...item, isCompleted: checked };
+			}
+			return item;
+		});
+		setTodoList(currentTodoList);
+	};
+
 	const onCreateTodo = async () => {
 		try {
 			const body = { todo: todo };
@@ -33,6 +44,17 @@ const ToDo = () => {
 		}
 	};
 
+	const onDeleteTodo = async (id: number) => {
+		console.log(id);
+		try {
+			await deleteTodo(id);
+			const filteredTodoList = todoList?.filter((item: ITodo) => item.id !== id);
+			setTodoList(filteredTodoList);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	return (
 		<>
 			<input data-testid="new-todo-input" value={todo} onChange={onChangeTodo} />
@@ -41,10 +63,19 @@ const ToDo = () => {
 			</button>
 			{todoList &&
 				todoList.map((item) => (
-					<li>
+					<li key={item.id}>
 						<label>
-							<input type="checkbox" />
+							<input
+								type="checkbox"
+								value={item.id}
+								checked={item.isCompleted}
+								onChange={(e) => onChangeComplete(e, item.id)}
+							/>
 							<span>{item.todo}</span>
+							<button data-testid="modify-button">수정</button>
+							<button data-testid="delete-button" onClick={() => onDeleteTodo(item.id)}>
+								삭제
+							</button>
 						</label>
 					</li>
 				))}
