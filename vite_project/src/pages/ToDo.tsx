@@ -27,6 +27,7 @@ const ToDo = () => {
 			if (todoList) {
 				setTodoList([...todoList, item]);
 			}
+			setTodo('');
 		} catch (error) {
 			console.error(error);
 		}
@@ -34,7 +35,7 @@ const ToDo = () => {
 
 	return (
 		<>
-			<input data-testid="new-todo-input" onChange={onChangeTodo} />
+			<input data-testid="new-todo-input" value={todo} onChange={onChangeTodo} />
 			<button data-testid="new-todo-add-button" onClick={onCreateTodo}>
 				추가
 			</button>
