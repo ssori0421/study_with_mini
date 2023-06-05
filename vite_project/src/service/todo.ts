@@ -10,4 +10,8 @@ const getTodo = async () => {
 	return data;
 };
 
-export { createTodo, getTodo };
+const deleteTodo = async (id: number) => {
+	await authInstance.delete(`/todos/${id}`);
+};
+
+export { createTodo, getTodo, deleteTodo };
