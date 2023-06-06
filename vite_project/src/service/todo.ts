@@ -10,8 +10,13 @@ const getTodo = async () => {
 	return data;
 };
 
+const updateTodo = async (id: number, body: object) => {
+	const { data } = await authInstance.put(`/todos/${id}`, body);
+	return data;
+};
+
 const deleteTodo = async (id: number) => {
 	await authInstance.delete(`/todos/${id}`);
 };
 
-export { createTodo, getTodo, deleteTodo };
+export { createTodo, getTodo, updateTodo, deleteTodo };
