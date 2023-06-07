@@ -1,4 +1,4 @@
-import { useState,  } from 'react';
+import { useState } from 'react';
 import { ITodo } from '../../types/todo';
 
 interface IProps {
@@ -7,7 +7,7 @@ interface IProps {
 	onDeleteTodo: (id: number) => void;
 }
 
-const TodoItem = ({ item, , onUpdateTodo, onDeleteTodo }: IProps) => {
+const TodoItem = ({ item, onUpdateTodo, onDeleteTodo }: IProps) => {
 	const { id, todo, isCompleted } = item;
 	const [isEditMode, setIsEditMode] = useState(false);
 	const [editTodo, setEditTodo] = useState<string>(todo);
