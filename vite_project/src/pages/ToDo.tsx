@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { createTodo, getTodo, deleteTodo, updateTodo } from '../service/todo';
 import { ITodo } from '../types/todo';
-import TodoList from '../components/TodoList';
+import TodoList from '../components/TodoList/TodoList';
 
 const ToDo = () => {
 	const [todo, setTodo] = useState<string>('');
@@ -19,17 +19,6 @@ const ToDo = () => {
 	const onChangeTodo = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
 		setTodo(value);
-	};
-
-	const onChangeComplete = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-		const { checked } = e.target;
-		const currentTodoList = todoList?.map((item: ITodo) => {
-			if (item.id === id) {
-				return { ...item, isCompleted: checked };
-			}
-			return item;
-		});
-		setTodoList(currentTodoList);
 	};
 
 	const onCreateTodo = async () => {
@@ -78,12 +67,7 @@ const ToDo = () => {
 			<button data-testid="new-todo-add-button" onClick={onCreateTodo}>
 				추가
 			</button>
-			<TodoList
-				todoList={todoList}
-				onChangeComplete={onChangeComplete}
-				onUpdateTodo={onUpdateTodo}
-				onDeleteTodo={onDeleteTodo}
-			/>
+			<TodoList todoList={todoList} onUpdateTodo={onUpdateTodo} onDeleteTodo={onDeleteTodo} />
 		</>
 	);
 };
