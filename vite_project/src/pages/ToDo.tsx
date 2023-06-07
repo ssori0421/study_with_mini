@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { createTodo, getTodo, deleteTodo, updateTodo } from '../service/todo';
 import { ITodo } from '../types/todo';
+import CreateTodo from '../components/TodoList/CreateTodo';
 import TodoList from '../components/TodoList/TodoList';
 
 const ToDo = () => {
@@ -63,10 +64,7 @@ const ToDo = () => {
 
 	return (
 		<>
-			<input data-testid="new-todo-input" value={todo} onChange={onChangeTodo} />
-			<button data-testid="new-todo-add-button" onClick={onCreateTodo}>
-				추가
-			</button>
+			<CreateTodo todo={todo} onChangeTodo={onChangeTodo} onCreateTodo={onCreateTodo}/>
 			<TodoList todoList={todoList} onUpdateTodo={onUpdateTodo} onDeleteTodo={onDeleteTodo} />
 		</>
 	);
