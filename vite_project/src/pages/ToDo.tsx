@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { createTodo, getTodo, deleteTodo, updateTodo } from '../service/todo';
 import { ITodo } from '../types/todo';
+import TodoList from '../components/TodoList';
 
 const ToDo = () => {
 	const [todo, setTodo] = useState<string>('');
-	const [todoList, setTodoList] = useState<ITodo[]>();
-	const [editModeId, setEditModeId] = useState<number>();
-	const [editTodo, setEditTodo] = useState<string>(todo);
+	const [todoList, setTodoList] = useState<ITodo[]>([]);
 
 	const getTodoList = useCallback(async () => {
 		const data = await getTodo();
@@ -46,15 +45,6 @@ const ToDo = () => {
 		}
 	};
 
-	const onEditMode = (id: number) => {
-		setEditModeId(id);
-	};
-
-	const onChangeTodoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { value } = e.target;
-		setEditTodo(value);
-	};
-
 	const onUpdateTodo = async (id: number, todo: string, isCompleted: boolean) => {
 		const body = { todo: todo, isCompleted: isCompleted };
 		try {
@@ -88,42 +78,12 @@ const ToDo = () => {
 			<button data-testid="new-todo-add-button" onClick={onCreateTodo}>
 				추가
 			</button>
-			{todoList &&
-				todoList.map((item) => (
-					<li key={item.id}>
-						{editModeId === item.id ? (
-							<>
-								<input
-									type="checkbox"
-									value={item.id}
-									checked={item.isCompleted}
-									onChange={(e) => onChangeComplete(e, item.id)}
-								/>
-								<input data-testid="modify-input" checked={item.isCompleted} onChange={onChangeTodoInput} />
-								<button data-testid="submit-button" onClick={() => onUpdateTodo(item.id, item.todo, item.isCompleted)}>
-									제출
-								</button>
-								<button data-testid="cancel-button">취소</button>
-							</>
-						) : (
-							<>
-								<input
-									type="checkbox"
-									value={item.id}
-									checked={item.isCompleted}
-									onChange={(e) => onChangeComplete(e, item.id)}
-								/>
-								<span>{item.todo}</span>
-								<button data-testid="modify-button" onClick={() => onEditMode(item.id)}>
-									수정
-								</button>
-								<button data-testid="delete-button" onClick={() => onDeleteTodo(item.id)}>
-									삭제
-								</button>
-							</>
-						)}
-					</li>
-				))}
+			<TodoList
+				todoList={todoList}
+				onChangeComplete={onChangeComplete}
+				onUpdateTodo={onUpdateTodo}
+				onDeleteTodo={onDeleteTodo}
+			/>
 		</>
 	);
 };
