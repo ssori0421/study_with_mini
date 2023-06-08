@@ -3,6 +3,9 @@ import { createTodo, getTodo, deleteTodo, updateTodo } from '../service/todo';
 import { ITodo } from '../types/todo';
 import CreateTodo from '../components/TodoList/CreateTodo';
 import TodoList from '../components/TodoList/TodoList';
+import PageLayout from '../components/Layout/PageLayout';
+import styled from 'styled-components';
+import { palette } from '../../styles/palette';
 
 const ToDo = () => {
 	const [todo, setTodo] = useState<string>('');
@@ -63,11 +66,20 @@ const ToDo = () => {
 	};
 
 	return (
-		<>
-			<CreateTodo todo={todo} onChangeTodo={onChangeTodo} onCreateTodo={onCreateTodo}/>
-			<TodoList todoList={todoList} onUpdateTodo={onUpdateTodo} onDeleteTodo={onDeleteTodo} />
-		</>
+		<PageLayout title={'투두 리스트'}>
+			<StTodoListWrapper>
+				<CreateTodo todo={todo} onChangeTodo={onChangeTodo} onCreateTodo={onCreateTodo} />
+				<TodoList todoList={todoList} onUpdateTodo={onUpdateTodo} onDeleteTodo={onDeleteTodo} />
+			</StTodoListWrapper>
+		</PageLayout>
 	);
 };
 
 export default ToDo;
+
+const StTodoListWrapper = styled.form`
+	width: 380px;
+	border: 1px solid ${palette.mainColor};
+	border-radius: 10px;
+	padding: 10px;
+`;
