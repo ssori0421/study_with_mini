@@ -3,6 +3,7 @@ import { email_regex, password_regex } from '../util/regex';
 import { useNavigate } from 'react-router-dom';
 import { postSignIn } from '../service/sign';
 import styled from 'styled-components';
+import { palette } from '../../styles/palette';
 
 const SignIn = () => {
 	const [email, setEmail] = useState<string>('');
@@ -81,12 +82,12 @@ const StSignContainer = styled.div`
 const StTitle = styled.div`
 	font-size: 20px;
 	font-weight: 700;
-	color: #adc9ff;
+	color: ${palette.mainColor};
 `;
 
 const StForm = styled.form`
 	width: 380px;
-	border: 1px solid #adc9ff;
+	border: 1px solid ${palette.mainColor};
 	border-radius: 10px;
 	padding: 10px;
 `;
@@ -94,19 +95,18 @@ const StForm = styled.form`
 const StInputName = styled.p`
 	font-size: 12px;
 	font-weight: 500;
-	color: #adc9ff;
+	color: ${palette.mainColor};
 `;
 
 const StSignInput = styled.input`
 	display: block;
 	width: 100%;
-	border: 1px solid #adc9ff;
-
+	border: 1px solid ${palette.mainColor};
 	padding: 4px 2px;
 `;
 
 const StSignMessage = styled.p`
-	color: #adc9ff;
+	color: ${palette.mainColor};
 	font-size: 3px;
 	font-weight: 400;
 	margin-bottom: 10px;
@@ -119,7 +119,7 @@ const StButtonWrapper = styled.div`
 const StButton = styled.button`
 	width: 200px;
 	height: 30px;
-	background-color: #adc9ff;
+	background-color: ${palette.mainColor};
 	color: #fff;
 	border-radius: 4px;
 `;
