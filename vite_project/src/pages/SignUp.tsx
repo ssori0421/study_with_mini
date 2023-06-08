@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { postSignUp } from '../service/sign';
 import styled from 'styled-components';
 import { palette } from '../../styles/palette';
+import PageLayout from '../components/Layout/PageLayout';
 
 const SignUp = () => {
 	const [email, setEmail] = useState<string>('');
@@ -47,8 +48,7 @@ const SignUp = () => {
 	};
 
 	return (
-		<StSignContainer>
-			<StTitle>회원가입 :)</StTitle>
+		<PageLayout title={'회원가입'}>
 			<StForm onSubmit={onsubmitForm}>
 				<StInputName>Email:</StInputName>
 				<StSignInput data-testid="email-input" onChange={onChangeEmail} placeholder="이메일을 입력해 주세요." />
@@ -65,25 +65,11 @@ const SignUp = () => {
 					<StButton data-testid="signup-button">회원가입</StButton>
 				</StButtonWrapper>
 			</StForm>
-		</StSignContainer>
+		</PageLayout>
 	);
 };
 
 export default SignUp;
-
-const StSignContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin: 150px;
-	gap: 10px;
-`;
-
-const StTitle = styled.div`
-	font-size: 20px;
-	font-weight: 700;
-	color: ${palette.mainColor};
-`;
 
 const StForm = styled.form`
 	width: 380px;
@@ -102,7 +88,6 @@ const StSignInput = styled.input`
 	display: block;
 	width: 100%;
 	border: 1px solid ${palette.mainColor};
-
 	padding: 4px 2px;
 `;
 
@@ -121,6 +106,6 @@ const StButton = styled.button`
 	width: 200px;
 	height: 30px;
 	background-color: ${palette.mainColor};
-	color: #fff;
+	color: ${palette.white};
 	border-radius: 4px;
 `;
