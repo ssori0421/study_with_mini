@@ -1,1 +1,3 @@
-// 이 곳에 정답 코드를 작성해주세요.
+import getProductData from './api/getProductData.js';
+
+getProductData().then((data) => console.log(data));
